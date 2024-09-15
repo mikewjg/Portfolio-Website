@@ -1,0 +1,93 @@
+
+#title-container{
+    display: flex;
+    justify-content: center;
+    background-color: darkgreen;
+    -webkit-box-shadow: -1px 1px 5px 5px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 1px 5px 5px rgba(0,0,0,0.75);
+    box-shadow: -1px 1px 5px 5px rgba(0,0,0,0.75);
+    margin: 0px 0px 40px 0px;
+    padding: 10px 0px;
+}
+
+.blackjack a{
+    color: blue;
+    font-style: normal;
+    text-decoration: none;
+}
+
+.blackjack p{
+    color: white;
+    margin: 10px;
+}
+
+#return-to-home-text{
+    color: black;
+    font-style: normal;
+    text-decoration: none;
+}
+
+#main-game-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: darkolivegreen;
+    -webkit-box-shadow: -1px 1px 5px 5px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 1px 5px 5px rgba(0,0,0,0.75);
+    box-shadow: -1px 1px 5px 5px rgba(0,0,0,0.75);
+    
+}
+
+#main-game-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width:100%;
+}
+
+.hand-container{
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: flex-start;
+    
+}
+
+.cards-container{
+    display: flex;
+    justify-content: center;
+    width: 120px;
+    
+    height: 150px;
+    margin: 10px;
+}
+
+.card-wrapper{
+    overflow:hidden;
+
+}
+
+.card-wrapper:last-child, .card-wrapper:hover{
+    overflow:visible;
+}
+
+.card-image{
+    width:100px
+}
+
+#computers-cards-container{
+    width: 180px;
+}
+
+.buttons-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 300px;
+    height: 150px;
+    margin: 10px;
+    position: relative;
+}
+
+
+

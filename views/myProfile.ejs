@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Contact</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header><%- include("header.ejs") %></header>
+
+    <div class="main-content">
+      <div id="my-profile-container">
+        <div id="side-nav-bar" class="content-block">
+          <image id="profile-picture" src=""></image>
+
+          <p><%= username %></p>
+
+          <nav>
+            <form action="/myProfile/myProfile" method="GET">
+            <button type="submit" class="my-profile-content-button" value="my-profile-content">
+              My Profile
+            </button>
+            </form>
+            
+            <form action="/myProfile/dashboard" method="GET">
+            <button type="submit" class="my-profile-content-button" value="dashboard-content">
+              Dashboard
+            </button>
+            </form>
+
+            <form action="/myProfile/calendar" method="GET">
+            <button type="submit" class="my-profile-content-button" value="calendar-content">
+              Calendar
+            </button>
+            <button id="SignOutButton">Sign Out</button>
+            </form>
+
+          </nav>
+        </div>
+        
+        <% switch(activeTab) {         
+            case "myProfile" : %>
+
+        <div id="my-profile-content"
+          class="my-profile-content-container"
+        >
+          <h1>My Profile</h1>
+
+        </div>
+
+        <% break;
+        case "dashboard" : %>
+
+        <div id="dashboard-content" class="my-profile-content-container">
+          <h1>Dashboard</h1>
+
+          <div id="dashboard-weather-content" class="content-block">
+            <h2>Weather</h2>
+
+            <form action="/myProfile/Dashboard/Weather" method="GET">
+            <label for="cityForWeatherForecast">Enter city name here</label>
+            <input
+              type="text"
+              name="cityForWeatherForecastInput"
+              id="cityForWeatherForecastInput"
+              placeholder="Example: London"
+              required
+            />
+            <button type="submit" id="get-weather-forecast-by-city-button">
+              Get weather forecast
+            </button>
+            </form>
+
+            <%= weatherByCityText %> 
+            
+            Powered by
+            <a href="https://www.weatherapi.com/" title="Free Weather API">WeatherAPI.com</a>
+            <a href="https://www.weatherapi.com/" title="Free Weather API"
+              ><img
+                src="//cdn.weatherapi.com/v4/images/weatherapi_logo.png"
+                alt="Weather data by WeatherAPI.com"
+            /></a>
+          </div>
+        </div>
+
+        <% break;
+        case "calendar" : %>    
+
+        <div id="calendar-content"
+          class="my-profile-content-container content-block"
+        >
+          <p>calendar</p>
+        </div>
+
+        <% break;
+        default: %>
+        <div id="my-profile-content"
+          class="my-profile-content-container"
+        >
+          <p>my profile</p>
+        </div>
+
+        <% } %>
+      </div>
+    </div>
+    <!-- <script src="../public/myProfile.js"></script> -->
+  </body>
+</html>

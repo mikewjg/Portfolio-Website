@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack</title>
+    <link rel="stylesheet" href="../public/blackjack_stylesheet.css">
+    <link rel="stylesheet" href="../public/styles.css">
+</head>
+
+<body>
+    <header>
+        <%- include("header.ejs") %>
+    </header>
+
+    <div class="main-content">
+    <div class="blackjack" id="title-container">
+        <h1 class="blackjack" >Blackjack</h1>
+    </div>
+    
+    <div class="blackjack" id="main-game-content">
+        <div class="blackjack" id="main-game-container">
+            <div id="players-hand" class="hand-container blackjack">
+                <p>Your Score: <p id="player-score-p">0</p></p>
+                <p>Your hand</p>
+                <div id="players-cards-container" class="cards-container">
+                </div>
+                <div class="button-container">
+                    <button id="stick-button">Stick</button>
+                    <button id="twist-button" class="clickable-button">Twist</button>
+                </div>
+            </div>
+    
+            <div id="computers-hand" class="hand-container">
+                <p>Computer's Score: <p id="computer-score-p">0</p></p>
+                <p>Computer's hand</p>
+                <div id="computers-cards-container" class="cards-container">
+                    <div class="card-wrapper">
+                        <img class="computer-card-image" src="./Images/Special Cards/face down.png" width="100" height="150">
+                    </div>
+                    <div class="card-wrapper">
+                        <img class="computer-card-image" src="./Images/Special Cards/face down.png" width="100" height="150">
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <p id="return-to-home-text">Return to <a href="./index.html">home page</a>.</p>
+    
+    </div>
+</div>
+
+    <script src="../public/game.js"></script>
+</body>
+</html>

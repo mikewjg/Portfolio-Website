@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nav Bar Header</title>
+    <link rel="stylesheet" href="../public/styles.css">
+</head>
+
+<body>
+<div id="top-nav-bar-container">
+
+    <nav class="left-nav-bar nav-bar">
+        <ul>
+
+            <li class="nav-button"><a href="index">Home</a></li>
+            <li class="nav-button"><a href="projects">Projects</a></li>
+            <li class="nav-button"><a href="hobbies">Hobbies</a></li>
+            <li class="nav-button"><a href="contact">Contact</a></li>
+
+        </ul>
+    </nav>
+
+    <nav class="right-nav-bar nav-bar">
+        <ul>
+
+            <li class="nav-button">
+                <%if (locals.loggedIn) { %>
+
+                    <a href="myProfile"> My Profile </a> 
+
+                <% } else{ %>
+                  
+                    <a href="login"> Login </a>
+                
+                <% } %>            
+            </li>
+            <li class="nav-button"><a href="createAccount">Create Account</a></li>
+
+        </ul>
+    </nav>
+
+</div>
+</body>

@@ -1,0 +1,24 @@
+{
+  "name": "learning-npm",
+  "version": "1.0.0",
+  "description": "\"Learning npm\"",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "hello"
+  },
+  "author": "mgilbert",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.5",
+    "body-parser": "^1.20.2",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "inquirer": "^10.1.2",
+    "morgan": "^1.10.0",
+    "pg": "^8.12.0",
+    "qr-image": "^3.2.0",
+    "sillyname": "^0.1.0",
+    "superheroes": "^4.0.0"
+  }
+}
