@@ -237,6 +237,10 @@ app.get("/myProfile/calendar", (req, res) => {
     });
 })
 
+app.get("/favicon.ico", (req, res) => {
+    res.sendFile("/public/Images/favicon.ico");
+})
+
 app.post("/submit", (req, res) => {
     console.log(req.body);
     res.send("Form submitted. Thank you!");
