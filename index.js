@@ -21,6 +21,7 @@ const db = new pg.Client({
 
 //#region Objects and Variables
 const dbQueries = new databaseQueries();
+const path = require('path');
 const app = express();
 const port = 3000;
 const __dirname = dirname(fileURLToPath(import.meta.url));
