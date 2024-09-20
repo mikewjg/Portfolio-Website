@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "hello"
+    "test": "hello",
+    "start": "node index.js"
   },
   "author": "mgilbert",
   "license": "ISC",

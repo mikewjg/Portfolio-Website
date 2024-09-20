@@ -230,8 +230,6 @@ app.get("/myProfile/dashboard/weather", async (req, res) => {
     
 })
 
-
-
 app.get("/myProfile/calendar", (req, res) => {
     res.render("myProfile.ejs",{
         username: currentUsername,
@@ -273,7 +271,9 @@ app.delete("/user/Michael", (req, res) => {
 //#endregion Event Handling
 
 
-app.listen(port, () => { //port number
-    console.log(`Server running on port ${port}.`); //callback function
-});
+//app.listen(port, () => { //port number
+//    console.log(`Server running on port ${port}.`); //callback function
+//});
+
+module.exports = app;
  
