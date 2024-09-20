@@ -111,11 +111,11 @@ async function loginCheck(req, res){
 
 //#region Event Handling
 app.get("/", (req, res) => {
-    res.render('index.ejs');
+    res.render('index');
 });
 
 app.get("/index", (req, res) => {
-    res.render('index.ejs');
+    res.render('index');
 });
 
 app.get("/hobbies", (req, res) => {
