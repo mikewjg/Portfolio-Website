@@ -110,7 +110,7 @@ async function loginCheck(req, res){
 //#endregion
 
 //#region Event Handling
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
     res.render('index');
 });
 
@@ -280,6 +280,7 @@ app.delete("/user/Michael", (req, res) => {
 //});
 
 app.set('view engine', 'ejs');
+app.set('views', path.resolve(__dirname, 'views'));
 
 export default app;
  
