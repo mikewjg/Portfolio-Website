@@ -279,5 +279,7 @@ app.delete("/user/Michael", (req, res) => {
 //    console.log(`Server running on port ${port}.`); //callback function
 //});
 
+app.set('view engine', 'ejs');
+
 export default app;
  
