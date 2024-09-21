@@ -49,6 +49,10 @@ function logger(req, res, next){
 //#region Use Middleware 
 app.use(logger);
 app.use(express.static(__dirname + "/public"));
+app.use('/images', express.static(__dirname + "/public/images"));
+app.use('/videos', express.static(__dirname + "/public/videos"));
+app.use('/images/Playing Cards', express.static(__dirname + "/public/images/Playing Cards"));
+app.use('/images/Special Cards', express.static(__dirname + "/public/images/Special Cards"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(function (req, res, next){
     res.locals.session = req.session;
