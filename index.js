@@ -48,7 +48,7 @@ function logger(req, res, next){
 
 //#region Use Middleware 
 app.use(logger);
-app.use(express.static("public"));
+app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(function (req, res, next){
     res.locals.session = req.session;
