@@ -156,13 +156,13 @@ app.get("/public/game.js", async (req, res) => {
 
     res.setHeader("Content-Type", "text/javascript");
 
-    res.sendFile("C:\\Users\\micha\\Desktop\\Personal Projects\\Programming Projects\\Web Development\\Portfolio Website\\public\\game.js");
+    res.sendFile(__dirname + "/public/game.js");
 })
 
 app.get("/public/myProfile.js", (req, res) => {
     res.setHeader("Content-Type", "text/javascript");
 
-    res.sendFile("C:\\Users\\micha\\Desktop\\Personal Projects\\Programming Projects\\Web Development\\Portfolio Website\\public\\myProfile.js");
+    res.sendFile(__dirname + "/public/myProfile.js");
 })
 
 app.get("/public/styles.css", (req, res) => {
@@ -180,7 +180,7 @@ app.get("/styles.css", (req, res) => {
 app.get("/public/blackjack_stylesheet.css", (req, res) => {
     res.setHeader("Content-Type", "text/css");
 
-    res.sendFile("C:\\Users\\micha\\Desktop\\Personal Projects\\Programming Projects\\Web Development\\Portfolio Website\\public\\blackjack_stylesheet.css");
+    res.sendFile(__dirname + "/public/blackjack_stylesheet.css");
 })
 
 app.get("/myProfile", (req, res) => {
