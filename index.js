@@ -168,7 +168,7 @@ app.get("/public/myProfile.js", (req, res) => {
 app.get("/public/styles.css", (req, res) => {
     res.setHeader("Content-Type", "text/css");
 
-    res.sendFile("C:\\Users\\micha\\Desktop\\Personal Projects\\Programming Projects\\Web Development\\Portfolio Website\\public\\styles.css");
+    res.sendFile("styles.css");
 })
 
 app.get("/public/blackjack_stylesheet.css", (req, res) => {
