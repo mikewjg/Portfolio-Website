@@ -8,16 +8,18 @@ import morgan from "morgan";
 import pg from "pg";
 import databaseQueries from "./databaseQueries.js";
 import axios from "axios";
-//#endregion
+import bcrypt from "bcrypt";
 
-//Create database client
-const db = new pg.Client({
-    user: "postgres",
-    host: "localhost",
-    database: "Portfolio Website",
-    password: "4Vuo6OivRw",
-    port: 5432,
-});
+import sequelize from "./config/database.js";
+
+//Database models
+import User from "./models/user.js";
+import Session from "./models/sessions.js";
+
+import session from "express-session";
+import connectSessionSequelize from 'connect-session-sequelize';
+
+//#endregion
 
 //#region Objects and Variables
 const dbQueries = new databaseQueries();
@@ -35,8 +37,43 @@ app.locals.myProfileActiveTab = Object.freeze({
     DASHBOARD: 1,
     CALENDAR: 2,
 });
+const SequelizeStore = connectSessionSequelize(session.Store);
 
 //#endregion 
+
+
+//#region Database
+
+//Set up express-session with Sequelize store
+app.use(session({
+    secret: 'mySecretKey',        // Secret for signing session ID cookies
+    store: new SequelizeStore({
+      db: sequelize,              // Use the Sequelize instance
+      model: Session,           // Name of the session table (optional if you use the model)
+      modelKey: 'sid',            // The column for session IDs
+      expiration: 24 * 60 * 60 * 1000, // Session expiration (in milliseconds)
+      checkExpirationInterval: 15 * 60 * 1000, // Interval for checking expired sessions (15 minutes)
+    }),
+    resave: false,                // Avoid resaving sessions that haven’t changed
+    saveUninitialized: false,     // Only save initialized sessions
+    cookie: {
+      maxAge: 24 * 60 * 60 * 1000, // Cookie expiration (1 day)
+      httpOnly: true,              // Helps mitigate XSS attacks
+      secure: false                // Set to true if using HTTPS
+    }
+  }));
+
+// sync database
+// sequelize.sync({force:false})
+//     .then(() => {
+//         console.log("Database synced successfully.");
+//     })
+//     .catch(error => {
+//         console.error("Unable to sync database:", error);
+//     });
+
+
+  //#endregion
 
 //#region custom middleware
 function logger(req, res, next){
@@ -54,10 +91,10 @@ app.use('/videos', express.static(__dirname + "/public/videos"));
 app.use('/images/Playing Cards', express.static(__dirname + "/public/images/Playing Cards"));
 app.use('/images/Special Cards', express.static(__dirname + "/public/images/Special Cards"));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(function (req, res, next){
-    res.locals.session = req.session;
-    next();
-});
+//app.use(function (req, res, next){
+//    res.locals.session = req.session;
+//    next();
+//});
 //app.use(loginCheck);
 //app.use(createAccount);
 //#endregion
@@ -84,6 +121,19 @@ async function createAccount(req, res){
         });
     }
 };
+
+async function checkEmailExists(email){
+    try {
+        const user = await User.findOne({
+            where: { email: email },
+        });
+
+        return user !== null;
+    }
+    catch (error){
+        console.error("Error checking email existence:", error);
+    }
+}
 
 async function loginCheck(req, res){
     const enteredPassword = req.body["password"];
@@ -114,6 +164,8 @@ async function loginCheck(req, res){
 //#endregion
 
 //#region Event Handling
+
+//GET requests
 app.get('/', (req, res) => {
     res.render('index');
 });
@@ -134,6 +186,7 @@ app.get("/contact", (req, res) => {
     res.render("contact.ejs");
 });
 
+//TO DO: redirect to my profile if logged in.
 app.get("/login", (req, res) => {
     res.render("login.ejs", {
         loginResult: "",
@@ -145,6 +198,7 @@ app.get("/login", (req, res) => {
 app.get("/createAccount", (req, res) => {
     res.render("createAccount.ejs", {
         createAccountResult: "",
+        error: false,
     });
 })
 
@@ -187,6 +241,7 @@ app.get("/public/blackjack_stylesheet.css", (req, res) => {
     res.sendFile(__dirname + "/public/blackjack_stylesheet.css");
 })
 
+//TO DO: use session data to check if logged in
 app.get("/myProfile", (req, res) => {
     if (app.locals.loggedIn){
         res.render("myProfile.ejs", {
@@ -251,6 +306,7 @@ app.get("/favicon.ico", (req, res) => {
     res.sendFile("/public/Images/favicon.ico");
 })
 
+//POST requests
 app.post("/submit", (req, res) => {
     console.log(req.body);
     res.send("Form submitted. Thank you!");
@@ -263,10 +319,38 @@ app.post("/login", (req, res) => {
     
 });
 
-app.post("/createAccount", (req, res) => {
-    console.log(req.body);
+app.post("/createAccount", async (req, res) => {
+    const {firstName, lastName, email, password, password2} = req.body;
 
-    createAccount(req, res);
+    if (password !== password2)
+    {
+        return res.render("./views/createAccount.ejs",{error:"Passwords do not match. Please retype your password."});
+    }
+
+    const emailExists = await checkEmailExists(email);
+
+    if (emailExists){
+        return res.render("./views/createAccount.ejs",{error:"An account has already been created with this email address."});
+    }
+    
+    try{
+        const user = await User.create({firstName, lastName, email, password})
+        res.status(201).render("createAccount.ejs", {
+            createAccountResult: "Account created!",
+            error: false,
+        });
+    }
+    catch (error){
+        console.error("unable to create account:", error);
+        res.status(400).render("createAccount.ejs", {
+            createAccountResult: "",
+            error: "Unable to create account",
+        });
+    }
+    
+    //console.log(req.body);
+
+    //createAccount(req, res);
 
 })
 
@@ -285,13 +369,14 @@ app.delete("/user/Michael", (req, res) => {
 //#endregion Event Handling
 
 
-//app.listen(port, () => { //port number
-//    console.log(`Server running on port ${port}.`); //callback function
-//});
+
 
 app.set('view engine', 'ejs');
 app.set("views", __dirname + "/views");
 //app.set('views', path.join(__dirname, 'views'));
 
-export default app;
- 
+//export default app;
+
+app.listen(port, () => { //port number
+    console.log(`Server running on port ${port}.`); //callback function
+});
